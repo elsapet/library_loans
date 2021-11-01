@@ -1,0 +1,18 @@
+<div class="flex justify-evenly">
+  <div>
+    <h2>On Loan</h2>
+    <div id="books_on_load">
+      <%= render partial: "book", collection: Book.order(:title).on_loan, as: :book%>
+    </div>
+  </div>
+
+  <div>
+    <h2>All</h2>
+    <%= form_for Book.new, format: :turbo_stream, method: :post do |form| %>
+      <%= form.submit "Add New Book" %>
+    <% end %>
+    <div id="all_books">
+      <%= render partial: "book", collection: Book.order(:title), as: :book%>
+    </div>
+  </div>
+</div>
