@@ -1,4 +1,4 @@
-<div class="flex justify-evenly">
+<turbo-frame id="test" class="flex justify-evenly">
   <div>
     <h2>On Loan</h2>
     <div id="books_on_load">
@@ -15,4 +15,4 @@
       <%= render partial: "book", collection: Book.order(:title), as: :book%>
     </div>
   </div>
-</div>
+</turbo-frame>

@@ -9,6 +9,8 @@ class BooksController < ApplicationController
       author: Author.last
     )
 
-    # render turbo_stream: turbo_stream.append("all_books", partial: "book", locals: { book: @book })
+    respond_to do |format|
+      format.turbo_stream
+    end
   end
 end
