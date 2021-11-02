@@ -1,16 +1,25 @@
 class BooksController < ApplicationController
-  def index
-  end
+  before_action :set_book, except: %i[create index]
 
   def create
-    @book = Book.create(
-      title: "Blah Blah #{Time.now}",
-      year: 2021,
-      author: Author.last
-    )
+    @book = Book.create(create_params)
+  end
 
-    respond_to do |format|
-      format.turbo_stream
-    end
+  def update
+    @book.update(update_params)
+  end
+
+  private
+
+  def set_book
+    @book = Book.find(params[:id])
+  end
+
+  def create_params
+    params.require(:book).permit(:author_id, :title, :year)
+  end
+
+  def update_params
+    params.require(:book).permit(:on_loan)
   end
 end

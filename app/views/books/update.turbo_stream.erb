@@ -1,0 +1,15 @@
+<% if @book.on_loan? %>
+  <%= turbo_stream.replace dom_id(@book), partial: "book", locals: { book: @book } %>
+  <%= turbo_stream.prepend "books_on_loan", partial: "book_on_loan", locals: { book: @book } %>
+<% else %>
+  <%= turbo_stream.replace dom_id(@book), partial: "book", locals: { book: @book } %>
+  <%= turbo_stream.remove dom_id(@book, :on_loan) %>
+<% end %>
+
+<%= turbo_stream.replace "all_books_counter" do %>
+  <h2 id="all_books_counter">All (Available: <%= Book.available.count %>)</h2>
+<% end %>
+
+<%= turbo_stream.replace "books_on_loan_counter" do %>
+  <h2 id="books_on_loan_counter">On Loan (<%= Book.on_loan.count %>)</h2>
+<% end %>

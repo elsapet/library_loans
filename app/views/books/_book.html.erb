@@ -1,6 +1,12 @@
-<div id="<%= dom_id(book) %>">
+<div id="<%= dom_id(book) %>" class="<%= 'bg-gray-400' if book.on_loan? %> mb-2 border-2 rounded">
   <div>
     <span class="font-semibold"><%= book.title %></span>, <%= book.year %>
   </div>
   <div class="italic"><%= book.author.name %></div>
-<div>
+  <% unless book.on_loan? %>
+    <%= form_for book do |form| %>
+      <%= form.hidden_field :on_loan, value: true %>
+      <%= form.submit "Borrow" %>
+    <% end %>
+  <% end %>
+</div>

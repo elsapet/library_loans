@@ -1,18 +1,24 @@
 <turbo-frame id="test" class="flex justify-evenly">
   <div>
-    <h2>On Loan</h2>
-    <div id="books_on_load">
-      <%= render partial: "book", collection: Book.order(:title).on_loan, as: :book%>
+    <h2 id="books_on_loan_counter">On Loan (<%= Book.on_loan.count %>)</h2>
+    <div id="books_on_loan">
+      <%= render partial: "book_on_loan", collection: Book.order(:title).on_loan, as: :book%>
     </div>
   </div>
 
   <div>
-    <h2>All</h2>
-    <%= form_for Book.new, format: :turbo_stream, method: :post do |form| %>
-      <%= form.submit "Add New Book" %>
-    <% end %>
+    <h2 id="all_books_counter">All (Available: <%= Book.available.count %>)</h2>
     <div id="all_books">
       <%= render partial: "book", collection: Book.order(:title), as: :book%>
     </div>
+  </div>
+
+  <div>
+    <%= form_for Book.new, html: { class: "flex" } do |form| %>
+      <%= form.select :author_id, Author.all.map { |author| [author.name, author.id] }, include_blank: "Select Author" %>
+      <%= form.text_field :title, placeholder: "Title" %>
+      <%= form.text_field :year, placeholder: "Year" %>
+      <%= form.submit "Add New Book" %>
+    <% end %>
   </div>
 </turbo-frame>

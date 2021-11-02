@@ -1,7 +1,10 @@
-<div id="<%= dom_id(book, :on_loan) %>">
+<div id="<%= dom_id(book, :on_loan) %>" class="mb-2 border-2 rounded">
   <div>
     <span class="font-semibold"><%= book.title %></span>, <%= book.year %>
-    <button></button>
+    <%= form_for book do |form| %>
+      <%= form.hidden_field :on_loan, value: false %>
+      <%= form.submit "Return" %>
+    <% end %>
   </div>
   <div class="italic"><%= book.author.name %></div>
-<div>
+</div>
